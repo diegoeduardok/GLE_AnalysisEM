@@ -341,8 +341,9 @@ class GLE_Estimator(DensityMixin, BaseEstimator):
         if self.init_params == "random" or self.init_params == "markov":
             max_ev = (1.0 / 50) / self.dt
             min_re_ev = (0.5 / traj_len) / self.dt
-            if min_re_ev < 0.005:
+            if min_re_ev > 0.005:
                 min_re_ev = max_ev / 100  # Diego's ugly patch
+            print("Min eigenvalue:", min_re_ev)
             A = generateRandomDefPosMat(dim_x=self.dim_x, dim_h=self.dim_h, rng=self.random_state,
                                         max_ev=max_ev, min_re_ev=min_re_ev)  # We ask the typical time scales to be
             # correct with minimum and maximum timescale of the trajectory
